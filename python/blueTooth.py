@@ -35,18 +35,18 @@ class bluetooth():
             #time.sleep(10)
             
             devices = scanner.scan(5.0,passive=False)
-        names=[]
+        
         for dev in devices:
             logging.info("Device %s (%s), RSSI=%d dB" % (dev.addr, dev.addrType, dev.rssi))
             for (adtype, desc, value) in dev.getScanData():
                
                 if value in buleName and dev.addr not in [d.addr for d in scanned_dev]:
-                    names.append(value)
+                    
                     devices_list.append(Peripheral(dev))
                 logging.info("  %s = %s" % (desc, value))
         logging.info('device:{}'.format(devices_list))
 
-        return devices_list,names
+        return devices_list
 
     def getServices(devices,server_uuid):
         services = devices.getServices()

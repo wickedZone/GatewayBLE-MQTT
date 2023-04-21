@@ -81,9 +81,9 @@ def on_message(lient, userdata, msg):
 
     
 
-def connect_and_subscribe(dev, name):
+def connect_and_subscribe(dev):
     try:
-        server = blueTooth.bluetooth.getServices(dev, name)
+        server = blueTooth.bluetooth.getServices(dev, identificadoresBLE[0])
         characteristic = blueTooth.bluetooth.getCharacteristics(server)
         dev.withDelegate(NotifyDelegate(dev))
         
@@ -98,11 +98,11 @@ def connect_and_subscribe(dev, name):
         print(f"Error connecting and subscribing to device {dev.addr}: {str(e)}")
         dev.disconnect()
 
-def worker(dev,names):
+def worker(dev):
     
     devicesRconn =[]
     namesRconn=[]
-    connect_and_subscribe(dev, names)
+    connect_and_subscribe(dev)
     while True:
         try:
             if dev.waitForNotifications(1.0):
@@ -116,7 +116,7 @@ def worker(dev,names):
                 dev.connect(dev.addr)
                 if len(dev.getServices()) > 0:
                     print("Connected to BLE device")
-                    connect_and_subscribe(dev, names)
+                    connect_and_subscribe(dev)
                 else:
                     print("Failed to reconnect to BLE device")
                     break
@@ -134,13 +134,13 @@ def main():
     threads = []
 
     while True:
-        devices, names = blueTooth.bluetooth.scannerDevices(identificadoresBLE, ScanDelegate,scanned_devices)
+        devices= blueTooth.bluetooth.scannerDevices(identificadoresBLE, ScanDelegate,scanned_devices)
         logging.info("HAY {} DISPOSITIVOS".format(len(devices)))
 
         
         for i, dev in enumerate(devices):
             if dev.addr not in scanned_devices:
-                t = threading.Thread(target=worker, args=(dev, names[i]))
+                t = threading.Thread(target=worker, args=(dev,))
                 t.name=(dev.addr)
                 #t.daemon=True
                 t.start()
