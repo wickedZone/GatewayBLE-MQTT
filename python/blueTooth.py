@@ -8,6 +8,7 @@ logging.basicConfig(stream=sys.stdout, level=logging.INFO, format='%(filename)s:
 
 BLUE_NAME = "6e400001-b5a3-f393-e0a9-e50e24dcca9e"
 SERVER_UUID = "6e400001-b5a3-f393-e0a9-e50e24dcca9e"
+passiveMode=True
 class ScanDelegate(DefaultDelegate):
     def __init__(self):
         DefaultDelegate.__init__(self)
@@ -29,11 +30,13 @@ class bluetooth():
         devices_list = []
         try:
             scanner = Scanner().withDelegate(scanner1())
-            devices = scanner.scan(5.0,passive=True)
-            #BLEScanner().start()
+            if passiveMode == True:
+                devices = scanner.scan(5.0,passive=True)
+            else: 
+                devices = scanner.scan(5.0,passive=False)
         except Exception as e:
-            #time.sleep(10)
-            
+            #si el primer escaneo pasivo no es compatible, se escanea en adelante de forma activa
+            passiveMode=False
             devices = scanner.scan(5.0,passive=False)
         
         for dev in devices:
