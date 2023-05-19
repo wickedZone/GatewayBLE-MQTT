@@ -149,8 +149,9 @@ def main():
                 #dispositivos.add(dev.addr)
         logging.info("Reescanning......")
         mqtt.publish("Scanned", str(scanned_devices), 2)
+        if len(scanned_devices)!=0:
+            time.sleep(350)
         
-        time.sleep(350)
         for t in threads:
             if not t.is_alive():
                 for devv in scanned_devices:

@@ -10,7 +10,7 @@
 
 
 
-  BLECharacteristic gyroyaccel(BLE_SENSE_UUID("6001"), BLERead | BLENotify, 7 * sizeof(uint16_t));   
+  BLECharacteristic gyroyaccel(BLE_SENSE_UUID("6001"), BLERead | BLENotify, 7 * sizeof(int16_t));   
 
   
 
@@ -86,19 +86,19 @@ uint16_t extractNumberFromMAC(String mac) {
       BHY2.update();
 
 
-      uint16_t x, y, z;
+      int16_t x, y, z;
 
       x = gyroscope.x();
       y = gyroscope.y();
       z = gyroscope.z();
     
-      uint16_t xx, yy, zz;
+      int16_t xx, yy, zz;
       xx = accelerometer.x();
       yy = accelerometer.y();
       zz = accelerometer.z();
 
-      uint16_t id=identificador;
-      uint16_t accelerometerValues[] = {id,x, y, z,xx,yy,zz};
+      int16_t id=identificador;
+      int16_t accelerometerValues[] = {id,x, y, z,xx,yy,zz};
       gyroyaccel.writeValue(accelerometerValues, sizeof(accelerometerValues));
       delay(25);
   
