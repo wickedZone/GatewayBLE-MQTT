@@ -34,24 +34,21 @@ class NotifyDelegate(DefaultDelegate):
         DefaultDelegate.__init__(self)
 
     def handleNotification(self, cHandle, data):
-        updateMsn = {}
-  
-  
-       
+     
         format = "<hhhhhhh"
-        float_values = struct.unpack(format, data)
+        values = struct.unpack(format, data)
         data = {}
         arrayy={}
-        data['id']=float_values[0]
+        data['id']=values[0]
       
-        arrayy['x']=float_values[1]
-        arrayy['y']=float_values[2]
-        arrayy['z']=float_values[3]
+        arrayy['x']=values[1]
+        arrayy['y']=values[2]
+        arrayy['z']=values[3]
         data['gyroscope'] = arrayy
         arrayy1={}
-        arrayy1['x']=float_values[4]
-        arrayy1['y']=float_values[5]
-        arrayy1['z']=float_values[6]
+        arrayy1['x']=values[4]
+        arrayy1['y']=values[5]
+        arrayy1['z']=values[6]
         data['accelerometer'] = arrayy1
         
         json_data = json.dumps(data)
