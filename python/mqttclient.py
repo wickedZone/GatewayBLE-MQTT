@@ -6,23 +6,8 @@ import paho.mqtt.client
 
 logging.basicConfig(stream=sys.stdout, level=logging.INFO, format='%(filename)s: %(levelname)s: %(message)s')
 
-MQTT_HOST = 'localhost'
 
-MQTT_PORT = 1883
 
-CLIENT_ID = 'a'  
-
-USER_NAME = 'a'
-
-PASSWORD = 'a'
-
-PUBLISH_TOPIC = '/user/pub'
-
-SUBSCRIBE_TOPIC = 'user/sub2'
-
-BIND_ADDRESS = ''
-
-MQTT_RECONNECT_TRIES = 60
 class MQTT():
     def __init__(self,host,clientID,username=None,password=None,port=1883,timeOut=60):
         self.Host = host
