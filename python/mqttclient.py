@@ -56,15 +56,3 @@ def on_message(client, userdata, msg):
 def on_connect(client, userdata, flags, rc):
     
     logging.info("Connected with result code "+str(rc))
-
-def main():# solo para pruebas
-    mqtt = MQTT(MQTT_HOST,CLIENT_ID,USER_NAME,PASSWORD)
-    mqtt.subscribe(SUBSCRIBE_TOPIC) 
-    mqtt.begin(on_message,on_connect)
-
-    while True:
-        time.sleep(2)
-        mqtt.publish(PUBLISH_TOPIC,"{\"msg\":\"hello,world!\"}")
-
-if __name__ == '__main__':
-    main()

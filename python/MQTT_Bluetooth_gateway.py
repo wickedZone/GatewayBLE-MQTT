@@ -15,7 +15,7 @@ from bluepy.btle import Scanner, DefaultDelegate,UUID, Peripheral
 
 identificadoresBLE= ['6e400001-b5a3-f393-e0a9-e50e24dcca9e']
 
-ROOT_PATH = os.path.dirname(os.path.realpath(__file__))
+
 logging.basicConfig(stream=sys.stdout, level=logging.INFO, format='%(filename)s: %(levelname)s: %(message)s')
 
 
