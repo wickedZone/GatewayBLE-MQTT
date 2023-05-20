@@ -10,7 +10,7 @@ import threading
 from yaml import full_load
 from bluepy.btle import Scanner, DefaultDelegate,UUID, Peripheral
 
-# time.sleep(30)  
+ 
 
 
 identificadoresBLE= ['6e400001-b5a3-f393-e0a9-e50e24dcca9e']
@@ -127,7 +127,7 @@ def worker(dev):
             
 def main():
     scanned_devices = set()
-    #dispositivos= set() # para guardar las mac de los dispositivos
+    
     mqtt.subscribe('/user/sub2') 
     mqtt.begin(on_message,on_connect)
     logging.info("Connected to broker. Starting CLI...")
@@ -142,11 +142,11 @@ def main():
             if dev.addr not in scanned_devices:
                 t = threading.Thread(target=worker, args=(dev,))
                 t.name=(dev.addr)
-                #t.daemon=True
+                
                 t.start()
                 threads.append(t)
                 scanned_devices.add(dev.addr)
-                #dispositivos.add(dev.addr)
+               
         logging.info("Reescanning......")
         mqtt.publish("Scanned", str(scanned_devices), 2)
         if len(scanned_devices)!=0:
