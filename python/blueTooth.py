@@ -25,6 +25,7 @@ class NotifyDelegate(DefaultDelegate):
         print("Notification from Handle: 0x" + format(cHandle,'02X') )
         print(hexlify(data))
 class bluetooth():
+    
     def scannerDevices(buleName,scanner1,scanned_dev):
         devices_list = []
         try:
