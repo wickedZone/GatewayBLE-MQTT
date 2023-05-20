@@ -6,8 +6,7 @@ from binascii import hexlify
 from multiprocessing import Process, Event
 logging.basicConfig(stream=sys.stdout, level=logging.INFO, format='%(filename)s: %(levelname)s: %(message)s')
 
-BLUE_NAME = "6e400001-b5a3-f393-e0a9-e50e24dcca9e"
-SERVER_UUID = "6e400001-b5a3-f393-e0a9-e50e24dcca9e"
+
 passiveMode=True
 class ScanDelegate(DefaultDelegate):
     def __init__(self):
@@ -71,31 +70,3 @@ class bluetooth():
         return characteristics_first
 
 
-def main():
-    devices = bluetooth.scannerDevices(BLUE_NAME,ScanDelegate)
-    server = bluetooth.getServices(devices,SERVER_UUID)
-    characteristic = bluetooth.getCharacteristics(server)
-
-
-    devices.withDelegate(NotifyDelegate(devices))
-
-    for descriptor in devices.getDescriptors(characteristic,server.hndEnd):
-        if (descriptor.uuid==0x2902):
-            print(f'Client Characteristic Configuration found at handle 0x{format(descriptor.handle,"02X")}')
-            hEcgCCC=descriptor.handle
-
-    devices.writeCharacteristic(hEcgCCC,bytes([1, 0]))
-
-    # tmp_data = devices.readCharacteristic(0x11)
-    # print(tmp_data)
- 
-    while True:
-        if devices.waitForNotifications(1.0):
-            continue
-        print("Waiting... Waited more than one sec for notification")
-        # devices.disconnect()
-
-
-if __name__ == '__main__':
-    logging.info("bluetooth.py running")
-    main()
