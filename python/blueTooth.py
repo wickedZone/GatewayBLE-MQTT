@@ -27,6 +27,7 @@ class NotifyDelegate(DefaultDelegate):
 class bluetooth():
     
     def scannerDevices(buleName,scanner1,scanned_dev):
+        global passiveMode
         devices_list = []
         try:
             scanner = Scanner().withDelegate(scanner1())
